@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Newsletter - {{restaurantName}}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #6C5CE7, #A29BFE);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px 20px;
+        }
+        
+        .greeting {
+            background: linear-gradient(135deg, #DDA0DD, #E6E6FA);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .greeting h2 {
+            color: #6C5CE7;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .section-content {
+            padding: 20px;
+        }
+        
+        .featured-items {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .featured-item {
+            display: flex;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease;
+        }
+        
+        .featured-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .item-image {
+            width: 120px;
+            height: 100px;
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+        }
+        
+        .item-details {
+            padding: 15px;
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .item-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .item-price {
+            font-weight: bold;
+            color: #FF6B6B;
+            font-size: 16px;
+        }
+        
+        .promotions {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .promotion {
+            background: linear-gradient(135deg, #FFD93D, #FF6B6B);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .promotion::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+        }
+        
+        .promotion h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .promotion p {
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+        }
+        
+        .promo-code {
+            background-color: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .upcoming-menus {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .menu-day {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .menu-day-header {
+            background-color: #6C5CE7;
+            color: white;
+            padding: 12px 15px;
+            font-weight: bold;
+        }
+        
+        .menu-day-content {
+            padding: 15px;
+            background-color: #f8f9fa;
+        }
+        
+        .menu-items {
+            list-style: none;
+        }
+        
+        .menu-items li {
+            padding: 5px 0;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .menu-items li:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-item-name {
+            color: #333;
+        }
+        
+        .menu-item-price {
+            color: #6C5CE7;
+            font-weight: bold;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: white;
+            color: #4ECDC4;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 15px 10px 0 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .social-links {
+            text-align: center;
+            margin: 25px 0;
+        }
+        
+        .social-links h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .social-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            margin: 0 10px;
+            background: linear-gradient(135deg, #6C5CE7, #A29BFE);
+            color: white;
+            text-decoration: none;
+            border-radius: 50%;
+            line-height: 40px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .footer {
+            background-color: #333;
+            color: #ccc;
+            padding: 25px 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: #6C5CE7;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .unsubscribe {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #555;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .featured-item {
+                flex-direction: column;
+            }
+            
+            .item-image {
+                width: 100%;
+                height: 120px;
+            }
+            
+            .cta-button {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍽️ {{restaurantName}}</h1>
+            <p>Weekly Newsletter - Week {{weekNumber}}</p>
+            <p style="font-size: 14px; margin-top: 10px;">{{currentDate}}</p>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                <h2>Hello {{subscriberName}}! 👋</h2>
+                <p>Welcome to another delicious week at {{restaurantName}}! Here's what's cooking...</p>
+            </div>
+            
+            {{#if featuredItems.length}}
+            <div class="section">
+                <div class="section-header">
+                    🌟 This Week's Featured Items
+                </div>
+                <div class="section-content">
+                    <div class="featured-items">
+                        {{#each featuredItems}}
+                        <div class="featured-item">
+                            <div class="item-image">
+                                {{#if icon}}{{icon}}{{else}}🍽️{{/if}}
+                            </div>
+                            <div class="item-details">
+                                <div class="item-name">{{name}}</div>
+                                <div class="item-description">{{description}}</div>
+                                <div class="item-price">₹{{price}}</div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            
+            {{#if promotions.length}}
+            <div class="section">
+                <div class="section-header">
+                    🎉 Special Offers & Promotions
+                </div>
+                <div class="section-content">
+                    <div class="promotions">
+                        {{#each promotions}}
+                        <div class="promotion">
+                            <h4>{{title}}</h4>
+                            <p>{{description}}</p>
+                            {{#if code}}
+                            <div class="promo-code">Use Code: {{code}}</div>
+                            {{/if}}
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            
+            {{#if upcomingMenus.length}}
+            <div class="section">
+                <div class="section-header">
+                    📅 Upcoming Weekly Menu
+                </div>
+                <div class="section-content">
+                    <div class="upcoming-menus">
+                        {{#each upcomingMenus}}
+                        <div class="menu-day">
+                            <div class="menu-day-header">
+                                {{day}}
+                            </div>
+                            <div class="menu-day-content">
+                                <ul class="menu-items">
+                                    {{#each items}}
+                                    <li>
+                                        <span class="menu-item-name">{{name}}</span>
+                                        <span class="menu-item-price">₹{{price}}</span>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            
+            <div class="cta-section">
+                <h3 style="margin-bottom: 15px;">Ready to Order? 🛒</h3>
+                <p>Don't miss out on these amazing dishes and offers!</p>
+                <a href="{{websiteUrl}}" class="cta-button">Order Now</a>
+                <a href="{{websiteUrl}}/menu" class="cta-button">View Full Menu</a>
+            </div>
+            
+            <div class="section">
+                <div class="section-header">
+                    💡 Did You Know?
+                </div>
+                <div class="section-content">
+                    <p style="font-style: italic; color: #666; text-align: center;">
+                        "All our ingredients are sourced from local organic farms to ensure the freshest and healthiest meals for our customers. We believe in supporting our community while serving you the best!"
+                    </p>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <h3>Follow Us for Daily Updates! 📱</h3>
+                <a href="#" class="social-icon">📘</a>
+                <a href="#" class="social-icon">📷</a>
+                <a href="#" class="social-icon">🐦</a>
+                <a href="#" class="social-icon">🔗</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 {{restaurantName}}. All rights reserved.</p>
+            <p>📍 123 Food Street, Healthy City, HC 12345 | 📞 +91 9876543210</p>
+            
+            <div class="unsubscribe">
+                <p>You're receiving this newsletter because you subscribed to our updates.</p>
+                <p>
+                    <a href="{{unsubscribeUrl}}">Unsubscribe</a> | 
+                    <a href="{{websiteUrl}}/preferences">Update Preferences</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

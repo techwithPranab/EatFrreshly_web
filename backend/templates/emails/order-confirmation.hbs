@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - {{orderNumber}}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px 20px;
+        }
+        
+        .order-info {
+            background-color: #f8f9fa;
+            border-left: 4px solid #4CAF50;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .order-info h2 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 5px 0;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .info-value {
+            color: #333;
+        }
+        
+        .items-section {
+            margin: 25px 0;
+        }
+        
+        .items-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 8px;
+        }
+        
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-details {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .item-quantity {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .item-price {
+            font-weight: bold;
+            color: #4CAF50;
+            font-size: 16px;
+        }
+        
+        .totals {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 5px 0;
+        }
+        
+        .total-row.final {
+            border-top: 2px solid #4CAF50;
+            padding-top: 12px;
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #4CAF50;
+        }
+        
+        .delivery-info {
+            background-color: #e8f5e8;
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .delivery-info h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        .delivery-address {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 3px solid #4CAF50;
+        }
+        
+        .contact-info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            margin-top: 25px;
+            border-radius: 8px;
+        }
+        
+        .contact-info h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .contact-details {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .contact-item {
+            text-align: center;
+        }
+        
+        .contact-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #4CAF50;
+        }
+        
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .info-row,
+            .total-row,
+            .item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .contact-details {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍽️ {{restaurantName}}</h1>
+            <p>Order Confirmation</p>
+        </div>
+        
+        <div class="content">
+            <div class="order-info">
+                <h2>Hello {{customerName}}!</h2>
+                <p>Thank you for your order. We've received it and are preparing your delicious meal!</p>
+                <div class="status-badge">✅ Order Confirmed</div>
+                
+                <div style="margin-top: 20px;">
+                    <div class="info-row">
+                        <span class="info-label">Order Number:</span>
+                        <span class="info-value">#{{orderNumber}}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Order Date:</span>
+                        <span class="info-value">{{orderDate}} at {{orderTime}}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Estimated Delivery:</span>
+                        <span class="info-value">{{estimatedDeliveryTime}}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="items-section">
+                <h3>🍴 Your Order Items</h3>
+                {{#each items}}
+                <div class="item">
+                    <div class="item-details">
+                        <div class="item-name">{{name}}</div>
+                        <div class="item-quantity">Quantity: {{quantity}}</div>
+                    </div>
+                    <div class="item-price">{{total}}</div>
+                </div>
+                {{/each}}
+            </div>
+            
+            <div class="totals">
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span>{{subtotal}}</span>
+                </div>
+                {{#if tax}}
+                <div class="total-row">
+                    <span>Tax:</span>
+                    <span>{{tax}}</span>
+                </div>
+                {{/if}}
+                {{#if deliveryFee}}
+                <div class="total-row">
+                    <span>Delivery Fee:</span>
+                    <span>{{deliveryFee}}</span>
+                </div>
+                {{/if}}
+                <div class="total-row final">
+                    <span>Total Amount:</span>
+                    <span>{{total}}</span>
+                </div>
+            </div>
+            
+            {{#if deliveryAddress}}
+            <div class="delivery-info">
+                <h3>📍 Delivery Information</h3>
+                <p>Your order will be delivered to:</p>
+                <div class="delivery-address">
+                    {{deliveryAddress}}
+                </div>
+            </div>
+            {{/if}}
+            
+            <div class="contact-info">
+                <h3>📞 Need Help?</h3>
+                <p style="margin-bottom: 15px;">Contact us if you have any questions about your order</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div>{{restaurantPhone}}</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div>{{restaurantEmail}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 {{restaurantName}}. All rights reserved.</p>
+            <p>You're receiving this email because you placed an order with us.</p>
+        </div>
+    </div>
+</body>
+</html>

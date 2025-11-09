@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Ready - {{orderNumber}}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px 20px;
+        }
+        
+        .completion-info {
+            background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+            border-left: 4px solid #FF6B35;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+            text-align: center;
+        }
+        
+        .completion-info h2 {
+            color: #FF6B35;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 15px 0;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .order-summary {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .order-summary h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 2px solid #FF6B35;
+            padding-bottom: 8px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .info-value {
+            color: #333;
+        }
+        
+        .items-list {
+            margin: 15px 0;
+        }
+        
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-name {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .item-quantity {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .pickup-delivery-info {
+            background-color: #fff3cd;
+            border: 1px solid #FF6B35;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .pickup-delivery-info h3 {
+            color: #FF6B35;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .location-box {
+            background-color: white;
+            border: 2px dashed #FF6B35;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .total-amount {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .total-amount h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .total-amount .amount {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .action-buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .action-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 0 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .contact-info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            margin-top: 25px;
+            border-radius: 8px;
+        }
+        
+        .contact-info h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .contact-details {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .contact-item {
+            text-align: center;
+        }
+        
+        .contact-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #FF6B35;
+        }
+        
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: #FF6B35;
+            text-decoration: none;
+        }
+        
+        .celebration {
+            text-align: center;
+            font-size: 48px;
+            margin: 20px 0;
+            animation: bounce 1s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-10px); }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .info-row,
+            .item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .contact-details {
+                flex-direction: column;
+            }
+            
+            .action-button {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍽️ {{restaurantName}}</h1>
+            <p>Your Order is Ready!</p>
+        </div>
+        
+        <div class="content">
+            <div class="completion-info">
+                <div class="celebration">🎉</div>
+                <h2>Great News, {{customerName}}!</h2>
+                <p>Your delicious meal is ready and waiting for you!</p>
+                <div class="status-badge">✅ Order Completed</div>
+            </div>
+            
+            <div class="order-summary">
+                <h3>📋 Order Details</h3>
+                <div class="info-row">
+                    <span class="info-label">Order Number:</span>
+                    <span class="info-value">#{{orderNumber}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Completed:</span>
+                    <span class="info-value">{{completionDate}} at {{completionTime}}</span>
+                </div>
+                
+                <div class="items-list">
+                    <h4 style="margin: 15px 0 10px 0; color: #555;">Items Prepared:</h4>
+                    {{#each items}}
+                    <div class="item">
+                        <div>
+                            <div class="item-name">{{name}}</div>
+                            <div class="item-quantity">Qty: {{quantity}}</div>
+                        </div>
+                        <div style="color: #4CAF50; font-size: 20px;">✓</div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            
+            <div class="total-amount">
+                <h3>Total Paid</h3>
+                <div class="amount">{{total}}</div>
+            </div>
+            
+            {{#if isDelivery}}
+            <div class="pickup-delivery-info">
+                <h3>🚚 Out for Delivery</h3>
+                <p style="font-size: 16px; margin-bottom: 15px;">Your order is on its way to you!</p>
+                <div class="location-box">
+                    <strong>Delivery Address:</strong><br>
+                    {{deliveryAddress}}
+                </div>
+                <p style="color: #666; margin-top: 15px;">
+                    <em>Our delivery person will contact you shortly</em>
+                </p>
+            </div>
+            {{/if}}
+            
+            {{#if isPickup}}
+            <div class="pickup-delivery-info">
+                <h3>🏪 Ready for Pickup</h3>
+                <p style="font-size: 16px; margin-bottom: 15px;">Please come and collect your order!</p>
+                <div class="location-box">
+                    <strong>Pickup Location:</strong><br>
+                    {{restaurantAddress}}
+                </div>
+                <p style="color: #666; margin-top: 15px;">
+                    <em>Please bring your order number for quick service</em>
+                </p>
+            </div>
+            {{/if}}
+            
+            <div class="action-buttons">
+                <a href="tel:{{restaurantPhone}}" class="action-button">📞 Call Restaurant</a>
+                <a href="#" class="action-button">⭐ Rate Your Experience</a>
+            </div>
+            
+            <div class="contact-info">
+                <h3>📞 Questions About Your Order?</h3>
+                <p style="margin-bottom: 15px;">We're here to help!</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div><strong>Phone</strong><br>{{restaurantPhone}}</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div><strong>Address</strong><br>{{restaurantAddress}}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background-color: #e8f5e8; padding: 20px; border-radius: 8px; margin: 25px 0; text-align: center;">
+                <h3 style="color: #4CAF50; margin-bottom: 10px;">🙏 Thank You!</h3>
+                <p>We appreciate your business and hope you enjoy your meal!</p>
+                <p style="margin-top: 10px;"><em>We'd love to hear about your experience - please consider leaving us a review!</em></p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 {{restaurantName}}. All rights reserved.</p>
+            <p>You're receiving this email because you placed an order with us.</p>
+        </div>
+    </div>
+</body>
+</html>
