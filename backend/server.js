@@ -30,14 +30,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : [
-    'http://localhost:3000',
-    'http://localhost:3001', 
-    'http://localhost:3002',
-    'http://localhost:3003' ,
-    'https://restaurentapp-e58k.onrender.com',// Chef frontend
-    'https://www.eatfreshly.in'
-  ],
+  origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : ['http://localhost:3000'],
   credentials: true
 }));
 app.use(morgan('combined'));
@@ -114,6 +107,7 @@ app.use('/api/*', (req, res) => {
 app.listen(PORT, () => {
   console.log('✅ Healthy Restaurant API is running');
   console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🔗 Backend service running at: http://localhost:${PORT}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
   
   // Start newsletter scheduler
