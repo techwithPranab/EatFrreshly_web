@@ -112,6 +112,7 @@ app.use('/api/*', (req, res) => {
 });
 
 app.listen(PORT, () => {
+  console.log('✅ Healthy Restaurant API is running');
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
   

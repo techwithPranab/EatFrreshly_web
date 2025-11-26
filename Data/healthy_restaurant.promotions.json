@@ -1,0 +1,80 @@
+[{
+  "_id": {
+    "$oid": "690fd324ae430c109368821f"
+  },
+  "title": "Welcome to Healthy Living",
+  "description": "Get 20% off your first order! Start your healthy journey with us.",
+  "discountPercent": 20,
+  "validFrom": {
+    "$date": "2025-11-08T23:32:52.438Z"
+  },
+  "validTo": {
+    "$date": "2025-12-08T23:32:52.438Z"
+  },
+  "promoCode": "WELCOME20",
+  "minimumOrderAmount": 15,
+  "maxDiscountAmount": 10,
+  "isActive": true,
+  "imageUrl": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400",
+  "usedCount": 0,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-11-08T23:32:52.919Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-08T23:32:52.919Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "690fd324ae430c1093688220"
+  },
+  "title": "Lunch Special",
+  "description": "15% off all orders placed between 11 AM - 3 PM",
+  "discountPercent": 15,
+  "validFrom": {
+    "$date": "2025-11-08T23:32:52.438Z"
+  },
+  "validTo": {
+    "$date": "2025-11-15T23:32:52.438Z"
+  },
+  "promoCode": "LUNCH15",
+  "minimumOrderAmount": 12,
+  "isActive": true,
+  "imageUrl": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400",
+  "usedCount": 0,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-11-08T23:32:52.919Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-08T23:32:52.919Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "690fd324ae430c1093688221"
+  },
+  "title": "Healthy Weekend",
+  "description": "Special weekend offer - 25% off on all salads and smoothies",
+  "discountPercent": 25,
+  "validFrom": {
+    "$date": "2025-11-08T23:32:52.438Z"
+  },
+  "validTo": {
+    "$date": "2025-11-22T23:32:52.438Z"
+  },
+  "promoCode": "WEEKEND25",
+  "minimumOrderAmount": 10,
+  "maxDiscountAmount": 15,
+  "isActive": true,
+  "imageUrl": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400",
+  "usedCount": 0,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-11-08T23:32:52.920Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-08T23:32:52.920Z"
+  }
+}]
