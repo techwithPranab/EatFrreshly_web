@@ -268,6 +268,125 @@ const Home = () => {
           </div>
         </section>
 
+        {/* Upcoming Menu Release Section */}
+        <section className="section bg-gradient-to-br from-primary-600 to-green-600 text-white relative overflow-hidden">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{
+              backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+              backgroundSize: '40px 40px'
+            }}></div>
+          </div>
+          
+          <div className="container relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="inline-flex items-center bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                <ChefHat className="w-4 h-4 mr-2" />
+                Exciting News
+              </div>
+              
+              <h2 className="text-3xl lg:text-5xl font-bold mb-6">
+                Our Full Menu Launches Soon!
+              </h2>
+              
+              <div className="max-w-3xl mx-auto mb-12">
+                <p className="text-xl text-white/90 mb-8">
+                  Get ready to explore our complete collection of nutritious and delicious meals. 
+                  Our chefs have been working tirelessly to create the perfect menu for your healthy lifestyle.
+                </p>
+                
+                {/* Countdown/Date Card */}
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
+                  <div className="flex items-center justify-center mb-4">
+                    <Clock className="w-8 h-8 mr-3" />
+                    <span className="text-lg font-semibold uppercase tracking-wide">Menu Release Date</span>
+                  </div>
+                  
+                  <div className="text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-white to-green-100 bg-clip-text text-transparent">
+                    January 15, 2026
+                  </div>
+                  
+                  <div className="flex items-center justify-center space-x-2 text-white/90">
+                    <Star className="w-5 h-5 fill-current" />
+                    <span className="text-lg">Mark Your Calendar</span>
+                    <Star className="w-5 h-5 fill-current" />
+                  </div>
+                </div>
+              </div>
+
+              {/* What to Expect */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20"
+                >
+                  <Leaf className="w-10 h-10 mb-4 mx-auto" />
+                  <h3 className="text-xl font-bold mb-2">10+ Healthy Dishes</h3>
+                  <p className="text-white/80">
+                    From power bowls to gourmet salads, something for every taste
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20"
+                >
+                  <Award className="w-10 h-10 mb-4 mx-auto" />
+                  <h3 className="text-xl font-bold mb-2">Chef's Specials</h3>
+                  <p className="text-white/80">
+                    Exclusive signature dishes crafted by our master chefs
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  viewport={{ once: true }}
+                  className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20"
+                >
+                  <Heart className="w-10 h-10 mb-4 mx-auto" />
+                  <h3 className="text-xl font-bold mb-2">Dietary Options</h3>
+                  <p className="text-white/80">
+                    Vegan, keto, gluten-free, and customizable meal plans
+                  </p>
+                </motion.div>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                viewport={{ once: true }}
+                className="mt-10"
+              >
+                <Link
+                  href="/register"
+                  className="inline-flex items-center bg-white text-primary-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl"
+                >
+                  Get Notified When Menu Drops
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+                <p className="text-white/80 text-sm mt-4">
+                  Join our pre-launch list and get exclusive early access to the menu
+                </p>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Pre-Launch Section */}
         <section className="section bg-gradient-to-br from-gray-50 to-primary-50">
           <div className="container">
