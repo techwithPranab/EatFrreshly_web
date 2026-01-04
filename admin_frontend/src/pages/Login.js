@@ -143,7 +143,7 @@ const Login = () => {
                 Demo Admin Credentials:
               </Typography>
               <Typography variant="body2" align="center" sx={{ mt: 1 }}>
-                Email: admin@healthyrestaurant.com<br />
+                Email: admin@healthyrestaurent.com<br />
                 Password: admin123
               </Typography>
             </Box>
