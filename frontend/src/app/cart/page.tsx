@@ -10,6 +10,7 @@ import { useAuth } from '@/context/AuthContext';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import MainLayout from '@/components/layout/MainLayout';
 import toast from 'react-hot-toast';
+import { analytics } from '@/utils/analytics';
 
 interface CartItem {
   _id: string;
@@ -53,8 +54,27 @@ const CartPage = () => {
     try {
       const response = await cartAPI.get();
       if (response.data.success) {
-        setCartData(response.data.data);
-        updateCart(response.data.data.cart);
+        const data = response.data.data;
+        setCartData(data);
+        updateCart(data.cart);
+        
+        // Track cart view
+        if (data.cart?.items?.length > 0) {
+          analytics.viewCart({
+            items: data.cart.items.map((i: any) => ({
+              menuItem: {
+                _id: i.menuItemId._id,
+                name: i.menuItemId.name,
+                category: i.menuItemId.category,
+                price: i.menuItemId.price,
+                imageUrl: i.menuItemId.imageUrl
+              },
+              quantity: i.quantity,
+              price: i.price,
+            })),
+            total: parseFloat(data.totalPrice || '0')
+          });
+        }
       }
     } catch (error: any) {
       console.error('Error fetching cart:', error);
@@ -87,12 +107,28 @@ const CartPage = () => {
   const removeItem = async (itemId: string) => {
     setUpdating(prev => ({ ...prev, [itemId]: true }));
 
+    // Find item before removing for analytics
+    const item = cartData?.cart?.items.find((i: any) => i._id === itemId);
+
     try {
       const response = await cartAPI.remove(itemId);
       if (response.data.success) {
         setCartData(response.data.data);
         updateCart(response.data.data.cart);
         toast.success('Item removed from cart');
+        
+        // Track remove from cart
+        if (item) {
+          analytics.removeFromCart(
+            {
+              _id: item.menuItemId._id,
+              name: item.menuItemId.name,
+              category: item.menuItemId.category,
+              price: item.menuItemId.price
+            },
+            item.quantity
+          );
+        }
       }
     } catch (error: any) {
       const message = error.response?.data?.message || 'Failed to remove item';
@@ -121,6 +157,23 @@ const CartPage = () => {
       toast.error('Your cart is empty');
       return;
     }
+    
+    // Track begin checkout
+    analytics.beginCheckout({
+      items: cartData.cart.items.map((i: any) => ({
+        menuItem: {
+          _id: i.menuItemId._id,
+          name: i.menuItemId.name,
+          category: i.menuItemId.category,
+          price: i.menuItemId.price,
+          imageUrl: i.menuItemId.imageUrl
+        },
+        quantity: i.quantity,
+        price: i.price,
+      })),
+      total: parseFloat(cartData.totalPrice || '0')
+    });
+    
     router.push('/checkout');
   };
 

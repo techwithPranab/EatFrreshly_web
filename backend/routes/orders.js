@@ -7,6 +7,7 @@ const MenuItem = require('../models/MenuItem');
 const EmailLog = require('../models/EmailLog');
 const { authenticateToken, authorizeRole } = require('../middleware/auth');
 const emailService = require('../services/emailService');
+const { sendPurchaseEvent } = require('../services/gaService');
 const router = express.Router();
 
 // Validation middleware
@@ -164,6 +165,23 @@ router.post('/', authenticateToken, validateOrder, async (req, res) => {
         customerEmail: order.userId.email
       });
       // Don't fail the order creation if email fails
+    }
+
+    // Fire server-side purchase event (non-blocking)
+    try {
+      sendPurchaseEvent(order).then((result) => {
+        if (result && result.success) {
+          console.log('Server-side GA purchase event recorded for order', order._id.toString());
+        } else if (result && result.skipped) {
+          console.log('Server-side GA event skipped (missing config)');
+        } else {
+          console.warn('Server-side GA event may have failed for order', order._id.toString(), result);
+        }
+      }).catch((err) => {
+        console.error('Error sending server-side GA event for order', order._id.toString(), err);
+      });
+    } catch (gaError) {
+      console.error('Unexpected error while sending server-side GA event:', gaError);
     }
 
     res.status(201).json({
@@ -445,6 +463,24 @@ router.put('/admin/:id/status', authenticateToken, authorizeRole(['admin']), asy
       success: false,
       message: 'Server error while updating order status'
     });
+  }
+});
+
+// @route   POST /api/orders/admin/:id/send-ga
+// @desc    Trigger server-side GA purchase event for a given order (Admin only, for testing)
+// @access  Private (Admin)
+router.post('/admin/:id/send-ga', authenticateToken, authorizeRole(['admin']), async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id).populate('userId', 'name email phone');
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    const result = await sendPurchaseEvent(order);
+    res.json({ success: true, result });
+  } catch (error) {
+    console.error('Error triggering server-side GA event:', error);
+    res.status(500).json({ success: false, message: 'Failed to trigger GA event' });
   }
 });
 
