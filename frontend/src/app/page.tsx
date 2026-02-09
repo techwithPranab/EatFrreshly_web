@@ -309,7 +309,7 @@ const Home = () => {
                   </div>
                   
                   <div className="text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-white to-green-100 bg-clip-text text-transparent">
-                    January 15, 2026
+                    February 1, 2026
                   </div>
                   
                   <div className="flex items-center justify-center space-x-2 text-white/90">
