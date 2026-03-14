@@ -15,8 +15,8 @@ const PreLaunchPage = () => {
   });
 
   useEffect(() => {
-    // Set launch date to March 1, 2026
-    const launchDate = new Date('2026-03-01T00:00:00');
+    // Set launch date to July 1, 2026
+    const launchDate = new Date('2026-07-01T00:00:00');
     
     const updateCountdown = () => {
       const now = new Date().getTime();
@@ -77,7 +77,7 @@ const PreLaunchPage = () => {
                   <Calendar className="w-12 h-12 text-primary-600 mx-auto mb-4" />
                   <h2 className="text-3xl font-bold text-gray-900 mb-2">Official Launch Date</h2>
                   <div className="text-5xl lg:text-6xl font-bold text-gradient mb-4">
-                    March 1, 2026
+                    July 1, 2026
                   </div>
                 </div>
 

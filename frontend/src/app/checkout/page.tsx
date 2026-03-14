@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { CreditCard, MapPin, Clock, Phone, User, Mail, CheckCircle } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { cartAPI, ordersAPI, promotionsAPI } from '@/services/api';
+import { analytics } from '@/utils/analytics';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import MainLayout from '@/components/layout/MainLayout';
 import StripePaymentWrapper from '@/components/payment/StripePaymentForm';
@@ -98,6 +99,24 @@ const CheckoutPage = () => {
       console.log('Cart data fetched:', response.data);
       if (response.data.success) {
         setCartData(response.data.data);
+        // Analytics: user viewing cart on checkout page
+        try {
+          analytics.viewCart({
+            items: response.data.data.cart.items.map((i: any) => ({
+              menuItem: {
+                _id: i.menuItemId._id,
+                name: i.menuItemId.name,
+                category: i.menuItemId.category || 'Menu',
+                price: i.menuItemId.price,
+              },
+              quantity: i.quantity,
+              price: i.price,
+            })),
+            total: parseFloat(response.data.data.totalPrice || 0)
+          });
+        } catch (err) {
+          console.warn('Analytics error (viewCart on checkout):', err);
+        }
       }
     } catch (error: any) {
       console.error('Error fetching cart:', error);
@@ -169,6 +188,12 @@ const CheckoutPage = () => {
       const data = await response.json();
 
       if (data.success) {
+        // Analytics: track purchase upon successful payment confirmation
+        try {
+          analytics.purchase(data.data.order);
+        } catch (err) {
+          console.warn('Analytics error (purchase - stripe confirm):', err);
+        }
         // Clear cart after successful order
         await cartAPI.clear();
         updateCart({ items: [], totalPrice: 0, totalItems: 0 });
@@ -219,6 +244,12 @@ const CheckoutPage = () => {
 
       const response = await ordersAPI.create(orderData);
       if (response.data.success) {
+        // Analytics: track purchase when order is created via standard flow
+        try {
+          analytics.purchase(response.data.data.order);
+        } catch (err) {
+          console.warn('Analytics error (purchase - create order):', err);
+        }
         // Clear cart after successful order
         await cartAPI.clear();
         updateCart({ items: [], totalPrice: 0, totalItems: 0 });

@@ -4,6 +4,7 @@ const { body, validationResult } = require('express-validator');
 const Order = require('../models/Order');
 const Cart = require('../models/Cart');
 const MenuItem = require('../models/MenuItem');
+const { sendPurchaseEvent } = require('../services/gaService');
 
 // Only initialize Stripe if the secret key is provided
 let stripe;
@@ -194,6 +195,23 @@ router.post('/confirm-payment', authenticateToken, async (req, res) => {
 
     // Populate order with user details for email
     await order.populate('userId', 'name email phone');
+
+    // Fire server-side GA purchase event (non-blocking)
+    try {
+      sendPurchaseEvent(order).then((result) => {
+        if (result && result.success) {
+          console.log('Server-side GA purchase event recorded for order', order._id.toString());
+        } else if (result && result.skipped) {
+          console.log('Server-side GA event skipped (missing config)');
+        } else {
+          console.warn('Server-side GA event may have failed for order', order._id.toString(), result);
+        }
+      }).catch((err) => {
+        console.error('Error sending server-side GA event for order', order._id.toString(), err);
+      });
+    } catch (gaError) {
+      console.error('Unexpected error while sending server-side GA event:', gaError);
+    }
 
     // Send order confirmation email (you can implement this)
     // await emailService.sendOrderConfirmation(order, order.userId);
