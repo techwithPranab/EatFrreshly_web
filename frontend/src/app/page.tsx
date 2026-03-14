@@ -309,7 +309,7 @@ const Home = () => {
                   </div>
                   
                   <div className="text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-white to-green-100 bg-clip-text text-transparent">
-                    February 1, 2026
+                    May 1, 2026
                   </div>
                   
                   <div className="flex items-center justify-center space-x-2 text-white/90">
@@ -412,7 +412,7 @@ const Home = () => {
               <div className="bg-white rounded-2xl shadow-soft p-8 mb-12 max-w-2xl mx-auto">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Official Launch Date</h3>
                 <div className="text-4xl lg:text-6xl font-bold text-gradient mb-2">
-                  March 1, 2026
+                  July 1, 2026
                 </div>
                 <p className="text-gray-600">Mark your calendars and be ready for the healthy food revolution!</p>
               </div>
